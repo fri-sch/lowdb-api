@@ -148,11 +148,6 @@ function lowdbApi(file, options = {}) {
  * @private
  */
 
-const defaultResource = {
-  data: [],
-  metadata: {}
-}
-
 function all(db, key) {
   return db.get(`${key}.data`, []).value()
 }
@@ -163,7 +158,7 @@ function get(db, key, id) {
 
 function insert(db, key, data) {
   // Ensure a resource entry exist for the given key.
-  db.defaults({ [key]: defaultResource }).write()
+  db.defaults({ [key]: { data: [], metadata: {} } }).write()
 
   // Generate the next id.
   if (typeof data.id === 'undefined') {
